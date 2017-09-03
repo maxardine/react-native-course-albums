@@ -9,3 +9,4 @@ const App = () => (
 );
 
 AppRegistry.registerComponent('albums', () => App);
+//tes
