@@ -1,20 +1,32 @@
 import React from 'react';
-import { Text, View, Image } from 'react-native';
+import { Text, View, Image, Linking } from 'react-native';
 import Card from './Card';
 import CardSection from './CardSection';
+import Button from './Button';
 
-const AlbumDetail = (props) => {
-    
-    return (
+const AlbumDetail = ({ album }) => {
+
+    const { headerContentStyle, thumbnailStyle, thumbnailContainerStyle, headerTextStyle, imageStyle } = styles;
+    const { title, artist, thumbnail_image, image, url } = album;
+
+    return(
         <Card>
             <CardSection>
-                <View>
-                    <Image source={props.album.image} />
+                <View style={thumbnailContainerStyle}>
+                    <Image source={{ uri: thumbnail_image }} style={thumbnailStyle} />
                 </View>
-                <View>
-                    <Text>{props.album.title}</Text>
-                    <Text>{props.album.artist}</Text>
+                <View style={headerContentStyle}>
+                    <Text style={headerTextStyle}>{title}</Text>
+                    <Text>{artist}</Text>
                 </View>
+            </CardSection>
+            <CardSection>
+                <Image source={{uri: image}} style={imageStyle} />
+            </CardSection>
+            <CardSection>
+                <Button onPress={() => Linking.openURL(url) } >
+                    Buy '{title}' on Amazon
+                </Button>
             </CardSection>
         </Card>
     );
@@ -23,8 +35,26 @@ const AlbumDetail = (props) => {
 const styles = {
     headerContentStyle: {
         justifyContent: 'space-around',
-        flexDirection: 'coloumn',
+        flexDirection: 'column',
+    },
+    headerTextStyle: {
+        fontSize: 18
+    },
+    thumbnailStyle: {
+        height: 50,
+        width: 50
+    },
+    thumbnailContainerStyle: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 10,
+        marginRight: 10,
+    },
+    imageStyle: {
+        height: 300,
+        width: null,
+        flex: 1
     }
-}
+};
 
 export default AlbumDetail;
